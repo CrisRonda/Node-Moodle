@@ -14,13 +14,14 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 app.use(parser.json());
 
+// test server
 app.get("/testing", function (req, res) {
   res.writeHead(200, {
     "Content-Type": "application/json",
   });
   res.end(JSON.stringify({ msj: "Exito" }));
 });
-
+// test webhooks
 app.post("/test", function (req, res) {
   console.log("___________________BODY___________________");
   console.log(req.body);
@@ -47,7 +48,6 @@ app.post("/login", async function (req, res) {
   if (username && password) {
     const { token, data } = await login({ username, password });
     const user = await getCurrentUser({ token, username });
-    // se guarda el user ==>  firebase.firestore.db.colection('users').document().set(user)
     res.end(JSON.stringify({ data, user }));
   }
   return res.end(JSON.stringify({ msj: "send all fields" }));
